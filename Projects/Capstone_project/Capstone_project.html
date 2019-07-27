@@ -13128,12 +13128,11 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># data processing</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># library for visualization.</span>
 <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">PCA</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span>
-<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="k">import</span> <span class="n">SVR</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestRegressor</span> <span class="c1">## random forest regression model</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span> <span class="c1">## benchmark model</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span>  <span class="c1">## evaluation metric</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;../work/Capstone_project&quot;</span><span class="p">))</span>
 </pre></div>
@@ -13152,7 +13151,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;pmsm_temperature_data.csv&#39;]
+<pre>[&#39;describe_data.JPG&#39;, &#39;feature_importance.JPG&#39;, &#39;kutosis.JPG&#39;, &#39;linear regression.JPG&#39;, &#39;pmsm_temperature_data.csv&#39;, &#39;rf_regression_py.png&#39;, &#39;skewness.JPG&#39;]
 </pre>
 </div>
 </div>
@@ -13405,7 +13404,8 @@ The two short session ids "46" and "47" might be not very representative as temp
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Data visualization with respect to session lengths</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">grpd</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;profile_id&#39;</span><span class="p">])</span>
 <span class="n">_df</span> <span class="o">=</span> <span class="n">grpd</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;samples&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">ordered_ids</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">profile_id</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -13440,6 +13440,309 @@ The two short session ids "46" and "47" might be not very representative as temp
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##description of data in terms of mean, standard deviation, max and median</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Shape of data: &#39;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Shape of data:  (998070, 13)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[4]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ambient</th>
+      <th>coolant</th>
+      <th>u_d</th>
+      <th>u_q</th>
+      <th>motor_speed</th>
+      <th>torque</th>
+      <th>i_d</th>
+      <th>i_q</th>
+      <th>pm</th>
+      <th>stator_yoke</th>
+      <th>stator_tooth</th>
+      <th>stator_winding</th>
+      <th>profile_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+      <td>998070.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>-0.003905</td>
+      <td>0.004723</td>
+      <td>0.004780</td>
+      <td>-0.005690</td>
+      <td>-0.006336</td>
+      <td>-0.003333</td>
+      <td>0.006043</td>
+      <td>-0.003194</td>
+      <td>-0.004396</td>
+      <td>0.000609</td>
+      <td>-0.002208</td>
+      <td>-0.003935</td>
+      <td>50.732001</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.993127</td>
+      <td>1.002423</td>
+      <td>0.997878</td>
+      <td>1.002330</td>
+      <td>1.001229</td>
+      <td>0.997907</td>
+      <td>0.998994</td>
+      <td>0.997912</td>
+      <td>0.995686</td>
+      <td>1.001049</td>
+      <td>0.999597</td>
+      <td>0.998343</td>
+      <td>22.073125</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-8.573954</td>
+      <td>-1.429349</td>
+      <td>-1.655373</td>
+      <td>-1.861463</td>
+      <td>-1.371529</td>
+      <td>-3.345953</td>
+      <td>-3.245874</td>
+      <td>-3.341639</td>
+      <td>-2.631991</td>
+      <td>-1.834688</td>
+      <td>-2.066143</td>
+      <td>-2.019973</td>
+      <td>4.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-0.599385</td>
+      <td>-1.037925</td>
+      <td>-0.826359</td>
+      <td>-0.927390</td>
+      <td>-0.951892</td>
+      <td>-0.266917</td>
+      <td>-0.756296</td>
+      <td>-0.257269</td>
+      <td>-0.672308</td>
+      <td>-0.747265</td>
+      <td>-0.761951</td>
+      <td>-0.725622</td>
+      <td>32.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.266157</td>
+      <td>-0.177187</td>
+      <td>0.267542</td>
+      <td>-0.099818</td>
+      <td>-0.140246</td>
+      <td>-0.187246</td>
+      <td>0.213935</td>
+      <td>-0.190076</td>
+      <td>0.094367</td>
+      <td>-0.057226</td>
+      <td>0.005085</td>
+      <td>0.006536</td>
+      <td>56.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.686675</td>
+      <td>0.650709</td>
+      <td>0.358491</td>
+      <td>0.852625</td>
+      <td>0.853584</td>
+      <td>0.547171</td>
+      <td>1.013975</td>
+      <td>0.499260</td>
+      <td>0.680691</td>
+      <td>0.697344</td>
+      <td>0.772239</td>
+      <td>0.725660</td>
+      <td>68.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2.967117</td>
+      <td>2.649032</td>
+      <td>2.274734</td>
+      <td>1.793498</td>
+      <td>2.024164</td>
+      <td>3.016971</td>
+      <td>1.060937</td>
+      <td>2.914185</td>
+      <td>2.917456</td>
+      <td>2.449158</td>
+      <td>2.326668</td>
+      <td>2.653781</td>
+      <td>81.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##skewness of data</span>
+<span class="n">df</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>ambient          -0.848914
+coolant           0.628247
+u_d               0.194644
+u_q               0.199885
+motor_speed       0.333305
+torque           -0.042660
+i_d              -0.622578
+i_q              -0.075705
+pm               -0.232903
+stator_yoke       0.257297
+stator_tooth     -0.061533
+stator_winding   -0.028055
+profile_id       -0.628412
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## kurtosis of data</span>
+<span class="n">df</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[6]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>ambient           0.822427
+coolant          -0.759946
+u_d              -0.522858
+u_q              -1.271316
+motor_speed      -1.166937
+torque            0.779318
+i_d              -0.754100
+i_q               0.784974
+pm               -0.349213
+stator_yoke      -0.728963
+stator_tooth     -0.779987
+stator_winding   -0.728416
+profile_id       -0.652661
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13451,10 +13754,12 @@ In particular, we'll have a look at more or less representative recordings that 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">pick_equidistant_elems</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##visualizing the data time series data</span>
+
+<span class="k">def</span> <span class="nf">pick_equidistant_elems</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;From a set of n elements, pick m which have equal distance to each other&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">n</span><span class="o">//</span><span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="o">//</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
 
@@ -13542,10 +13847,12 @@ In particular, we'll have a look at more or less representative recordings that 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">profile_id</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">46</span><span class="p">,</span> <span class="mi">47</span><span class="p">])]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## visualizing the data based on profile IDs.</span>
+
+<span class="n">_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">profile_id</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">46</span><span class="p">,</span> <span class="mi">47</span><span class="p">])]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">transformed</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">_df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;profile_id&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">target_features</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">_df</span><span class="o">.</span><span class="n">profile_id</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 <span class="n">cols</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
@@ -13613,10 +13920,12 @@ In particular, we'll have a look at more or less representative recordings that 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">testset_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">58</span><span class="p">,</span> <span class="mi">78</span><span class="p">]</span>  <span class="c1"># arbitrary selection of test IDs</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##splitting of data set</span>
+
+<span class="n">testset_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">58</span><span class="p">,</span> <span class="mi">78</span><span class="p">]</span>  <span class="c1"># arbitrary selection of test IDs</span>
 
 <span class="n">trainset</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">_df</span><span class="o">.</span><span class="n">profile_id</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">testset_ids</span><span class="p">)]</span>
 <span class="n">testset</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">_df</span><span class="o">.</span><span class="n">profile_id</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">testset_ids</span><span class="p">)]</span>
@@ -13627,10 +13936,11 @@ In particular, we'll have a look at more or less representative recordings that 
 <span class="n">trainset</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">testset</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">x_train</span> <span class="o">=</span> <span class="n">trainset</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;profile_id&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">x_train_1</span> <span class="o">=</span> <span class="n">trainset</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;profile_id&#39;</span><span class="p">,</span><span class="s1">&#39;pm&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">trainset</span><span class="p">[</span><span class="s1">&#39;pm&#39;</span><span class="p">]</span>
 
-<span class="n">x_test</span> <span class="o">=</span> <span class="n">testset</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;profile_id&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x_test_1</span> <span class="o">=</span> <span class="n">testset</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;profile_id&#39;</span><span class="p">,</span><span class="s1">&#39;pm&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">y_test</span> <span class="o">=</span> <span class="n">testset</span><span class="p">[</span><span class="s1">&#39;pm&#39;</span><span class="p">]</span>
 </pre></div>
 
@@ -13648,7 +13958,7 @@ In particular, we'll have a look at more or less representative recordings that 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">gmtime</span><span class="p">,</span> <span class="n">strftime</span>
@@ -13656,7 +13966,7 @@ In particular, we'll have a look at more or less representative recordings that 
 <span class="n">LR</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">(</span><span class="n">fit_intercept</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Start fitting Linear Regression model...&#39;</span><span class="p">)</span>
 <span class="n">LR</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pca_trainset</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">LR_pred</span> <span class="o">=</span> <span class="n">ols</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pca_testset</span><span class="p">)</span>
+<span class="n">LR_pred</span> <span class="o">=</span> <span class="n">LR</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pca_testset</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Linear Regression MSE: {mean_squared_error(y_test, LR_pred):.4f}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -13688,74 +13998,23 @@ Linear Regression MSE: 0.3558
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Implementation-with-Support-vector-regression-model">Implementation with Support vector regression model<a class="anchor-link" href="#Implementation-with-Support-vector-regression-model">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="k">import</span> <span class="n">SVR</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="k">import</span> <span class="n">make_pipeline</span>
-
-<span class="n">S</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">MinMaxScaler</span><span class="p">(),</span> <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Start fitting SVR...&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
-<span class="n">S</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
-<span class="n">S_pred</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;SVR MSE: {mean_squared_error(y_test, S_pred)}&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Start fitting SVR...
-2019-07-23 15:14:10
-2019-07-23 15:14:30
-2019-07-23 15:14:30
-SVR MSE: 0.0006514904981854053
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Implementation-with-ensemble-method-Random-forest-regression">Implementation with ensemble method Random forest regression<a class="anchor-link" href="#Implementation-with-ensemble-method-Random-forest-regression">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## implementation of random forest regression model</span>
+
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Start fitting RF...&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
-<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train_1</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
-<span class="n">rf_pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">rf_pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test_1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RF MSE: {mean_squared_error(y_test, rf_pred)}&#39;</span><span class="p">)</span>
 </pre></div>
@@ -13775,10 +14034,225 @@ SVR MSE: 0.0006514904981854053
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Start fitting RF...
-2019-07-23 15:15:18
-2019-07-23 15:16:58
-2019-07-23 15:16:58
-RF MSE: 7.232393517095166e-09
+2019-07-27 14:41:12
+2019-07-27 14:46:14
+2019-07-27 14:46:14
+RF MSE: 0.1449830666008829
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="GridSearch-technique-to-find-the-best-suited-parameter">GridSearch technique to find the best suited parameter<a class="anchor-link" href="#GridSearch-technique-to-find-the-best-suited-parameter">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## using grid search technique to identify best parameter value.</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">randomforest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_depth&#39;</span><span class="p">:[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">]}</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">randomforest</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train_1</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
+<span class="n">clf_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test_1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RF MSE: {mean_squared_error(y_test, clf_pred)}&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>2019-07-27 15:05:13
+2019-07-27 15:17:59
+2019-07-27 15:17:59
+RF MSE: 0.11984493253806391
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="visualization-of-important-features">visualization of important features<a class="anchor-link" href="#visualization-of-important-features">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Visualizing the importance of individual feature in prediction</span>
+
+<span class="n">importances</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">([</span><span class="n">tree</span><span class="o">.</span><span class="n">feature_importances_</span> <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">rf</span><span class="o">.</span><span class="n">estimators_</span><span class="p">],</span>
+             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Print the feature ranking</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature ranking:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x_train_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">. feature </span><span class="si">%d</span><span class="s2"> (</span><span class="si">%f</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">indices</span><span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="n">importances</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">f</span><span class="p">]]))</span>
+
+<span class="c1"># Plot the feature importances of the forest</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Feature importances&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">x_train_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">importances</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
+       <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">std</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">x_train_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">indices</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">x_train_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Feature ranking:
+1. feature 9 (0.590433)
+2. feature 0 (0.099994)
+3. feature 1 (0.071218)
+4. feature 4 (0.045288)
+5. feature 3 (0.038621)
+6. feature 6 (0.034409)
+7. feature 5 (0.033176)
+8. feature 8 (0.030549)
+9. feature 10 (0.024256)
+10. feature 2 (0.018005)
+11. feature 7 (0.014051)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="improvement-of-implementation-using-XGBoost">improvement of implementation using XGBoost<a class="anchor-link" href="#improvement-of-implementation-using-XGBoost">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Future improvement of present implementation.</span>
+
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="k">import</span> <span class="n">XGBRegressor</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
+<span class="n">xgb</span> <span class="o">=</span> <span class="n">XGBRegressor</span><span class="p">(</span><span class="n">nthread</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
+<span class="n">xgb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train_1</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
+<span class="n">xgb_pred</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test_1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RF MSE: {mean_squared_error(y_test, xgb_pred)}&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>2019-07-27 14:58:53
+2019-07-27 14:58:53
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>D:\Anaconda3\lib\site-packages\xgboost\core.py:587: FutureWarning: Series.base is deprecated and will be removed in a future version
+  if getattr(data, &#39;base&#39;, None) is not None and \
+D:\Anaconda3\lib\site-packages\xgboost\core.py:588: FutureWarning: Series.base is deprecated and will be removed in a future version
+  data.base is not None and isinstance(data, np.ndarray) \
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[20:28:53] WARNING: src/objective/regression_obj.cu:152: reg:linear is now deprecated in favor of reg:squarederror.
+2019-07-27 15:00:14
+2019-07-27 15:00:14
+RF MSE: 0.11579561886193944
 </pre>
 </div>
 </div>
